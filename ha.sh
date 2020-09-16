@@ -32,7 +32,9 @@ if [[ "${SERVERS[0]}" = "${CURRENT_IP}" ]]; then
   if [[ ! -f /etc/corosync/authkey ]]; then
     install_once haveged
     sudo corosync-keygen
-    echo '-------------------------------------------------------' echo '     Sync corosync key to other servers continue       '
+    chmod 600 /etc/corosync/authkey
+    echo '-------------------------------------------------------' 
+    echo '     Sync corosync key to other servers continue       '
     echo '-------------------------------------------------------'
     exit 1
   fi
