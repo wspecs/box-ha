@@ -23,8 +23,9 @@ sudo dpkg-reconfigure -f noninteractive tzdata
 install_once ntp
 install_once pacemaker
 
-sudo iptables -A INPUT  -i eth1 -p udp -m multiport --dports 5404,5405,5406 -m conntrack --ctstate NEW,ESTABLISHED -j ACCEPT
-sudo iptables -A OUTPUT  -o eth1 -p udp -m multiport --sports 5404,5405,5406 -m conntrack --ctstate ESTABLISHED -j ACCEPT
+sudo ufw allow 5404/udp
+sudo ufw allow 5405/udp
+sudo ufw allow 5406/udp
 
 SERVERS=($SERVERS_PRIVATE_IPS)
 if [[ "${SERVERS[0]}" = "${CURRENT_IP}" ]]; then
