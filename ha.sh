@@ -18,6 +18,7 @@ TIMEZONE=${TIMEZONE:-"America/New_York"}
 CURRENT_IP=$(curl 169.254.169.254/metadata/v1/interfaces/private/0/ipv4/address && echo)
 HOSTNAME=$(curl -s http://169.254.169.254/metadata/v1/hostname)
 PUBLIC_IPV4=$(curl -s http://169.254.169.254/metadata/v1/interfaces/public/0/ipv4/address)
+ANCHOR_IP=$(curl 169.254.169.254/metadata/v1/interfaces/public/0/anchor_ipv4/address && echo)
 SERVER_ID=1
 
 sudo timedatectl set-timezone "${TIMEZONE}"
