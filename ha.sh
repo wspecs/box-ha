@@ -16,6 +16,8 @@ CONFIG_FILE=${CONFIG_FILE:-/etc/corosync/corosync.conf}
 ALLOW_IP=${ALLOW_IP:-10.108.0.0/20}
 TIMEZONE=${TIMEZONE:-"America/New_York"}
 CURRENT_IP=$(curl 169.254.169.254/metadata/v1/interfaces/private/0/ipv4/address && echo)
+HOSTNAME=$(curl -s http://169.254.169.254/metadata/v1/hostname)
+PUBLIC_IPV4=$(curl -s http://169.254.169.254/metadata/v1/interfaces/public/0/ipv4/address)
 SERVER_ID=1
 
 sudo timedatectl set-timezone "${TIMEZONE}"
@@ -112,3 +114,8 @@ fi
 crm configure primitive FloatIP ocf:digitalocean:floatip \
   params do_token=$DO_TOKEN \
   floating_ip=$FLOATING_IP
+
+install_once nginx
+echo Droplet: $HOSTNAME, IP Address: $PUBLIC_IPV4 > /var/www/html/index.nginx-debian.html
+ufw allow from $ALLOW_IP to any port 80
+ufw allow from $ALLOW_IP to any port 443
