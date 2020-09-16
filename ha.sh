@@ -55,6 +55,7 @@ sudo service pacemaker stop
 sudo service corosync stop
 
 chmod 400 /etc/corosync/authkey
+ALLOW_IPS=""
 NODELIST=""
 NODE_NAMES=(primary secondary tertiary)
 for i in "${!SERVERS[@]}"; do
@@ -62,7 +63,7 @@ for i in "${!SERVERS[@]}"; do
     ring0_addr: ${SERVERS[$i]}
     name: ${NODE_NAMES[$i]}
     nodeid: $(echo ${i} + 1 | bc)\n  }\n"
-  
+  ALLOW_IPS+="allow ${SERVERS[$i]};\n"
 done
 
 TWO_NODES=0
@@ -123,3 +124,4 @@ ufw allow from $ALLOW_IP to any port 80
 ufw allow from $ALLOW_IP to any port 443
 
 sed "s#CURRENT_IP#$CURRENT_IP#" default_nginx.conf > $NGINX_CONFIG_FILE
+perl -i -p0e "s/ALLOW_HTTP_IPS/$ALLOW_HTTP_IPS/s" $NGINX_CONFIG_FILE
