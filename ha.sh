@@ -75,7 +75,7 @@ service {
 }
 EOL
 
-cat >/etc/corosync/default <<EOL
+cat > /etc/corosync/default <<EOL
 START=yes
 EOL
 
