@@ -68,14 +68,15 @@ sed -i "s#TWO_NODES#$TWO_NODES#" $CONFIG_FILE
 sed -i "s#CURRENT_IP#$CURRENT_IP#" $CONFIG_FILE
 
 mkdir -p  /etc/corosync/service.d
-cat >/etc/corosync/service.d/pcmk <<EOL
+
+cat > /etc/corosync/service.d/pcmk <<EOL
 service {
   name: pacemaker
   ver: 1
 }
 EOL
 
-cat > /etc/corosync/default <<EOL
+cat > /etc/default/corosync <<EOL
 START=yes
 EOL
 
