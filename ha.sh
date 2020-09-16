@@ -47,6 +47,9 @@ else
   fi
 fi
 
+sudo service pacemaker stop
+sudo service corosync stop
+
 chmod 400 /etc/corosync/authkey
 NODELIST=""
 NODE_NAMES=(primary secondary tertiary)
