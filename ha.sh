@@ -126,6 +126,10 @@ echo Droplet: $HOSTNAME, IP Address: $PUBLIC_IPV4 > /var/www/html/index.nginx-de
 ufw allow from $ALLOW_IP to any port 80
 ufw allow from $ALLOW_IP to any port 443
 
+if ! grep -q forwardfor /etc/nginx/nginx.conf; then		 
+  perl -i -p0e "s/http {/http {\n  log_format haproxy_log 'ProxyIP: $remote_addr - ClientIP: $http_x_forwarded_for - $remote_user [$time_local] ' '\"$request" $status $body_bytes_sent \"$http_referer\" ' '\"$http_user_agent\"';/s" /etc/nginx/nginx.conf
+fi
+
 sed "s#CURRENT_IP#$CURRENT_IP#" default_nginx.conf > $NGINX_CONFIG_FILE
 perl -i -p0e "s/ALLOW_HTTP_IPS/$ALLOW_NGINX_IPS/s" $NGINX_CONFIG_FILE
 
