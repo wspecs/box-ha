@@ -137,3 +137,4 @@ sed "s#LOAD_BALANCER_ANCHOR_IP#$ANCHOR_IP#" haproxy.cfg > $HAPROXY_CONFIG_FILE
 perl -i -p0e "s/BACKEND_POOL/$BACKEND_POOL/s" $HAPROXY_CONFIG_FILE
 
 haproxy -f /etc/haproxy/haproxy.cfg -c
+service haproxy restart
