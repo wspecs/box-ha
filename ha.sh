@@ -59,12 +59,14 @@ chmod 400 /etc/corosync/authkey
 ALLOW_NGINX_IPS=""
 NODELIST=""
 NODE_NAMES=(primary secondary tertiary)
+BACKEND_POOL=""
 for i in "${!SERVERS[@]}"; do
   NODELIST+="  node {
     ring0_addr: ${SERVERS[$i]}
     name: ${NODE_NAMES[$i]}
     nodeid: $(echo ${i} + 1 | bc)\n  }\n"
   ALLOW_NGINX_IPS+="  allow ${SERVERS[$i]};\n"
+  BACKEND_POOL+="server app-$(echo ${i} + 1 | bc) ${SERVERS[$i]}:80 check"
 done
 
 TWO_NODES=0
@@ -131,14 +133,7 @@ nginx -t
 service nginx restart
 
 install_once haproxy
-if ! grep -q forwardfor "$HAPROXY_CONFIG_FILE"; then
-  perl -i -p0e "s/defaults/defaults\n  option forwardfor/s" $HAPROXY_CONFIG_FILE
-  Some Actions # SomeString was not found
-fi
-
-if ! grep -q http-server-close "$HAPROXY_CONFIG_FILE"; then
-  perl -i -p0e "s/defaults/defaults\n  option http-server-close/s" $HAPROXY_CONFIG_FILE
-  Some Actions # SomeString was not found
-fi
+sed "s#LOAD_BALANCER_ANCHOR_IP#$ANCHOR_IP#" haproxy.cfg > $HAPROXY_CONFIG_FILE
+perl -i -p0e "s/BACKEND_POOL/$BACKEND_POOL/s" $HAPROXY_CONFIG_FILE
 
 haproxy -f /etc/haproxy/haproxy.cfg -c
