@@ -63,7 +63,7 @@ for i in "${!SERVERS[@]}"; do
     ring0_addr: ${SERVERS[$i]}
     name: ${NODE_NAMES[$i]}
     nodeid: $(echo ${i} + 1 | bc)\n  }\n"
-  ALLOW_IPS+="allow ${SERVERS[$i]};\n"
+  ALLOW_NGINX_IPS+="allow ${SERVERS[$i]};\n"
 done
 
 TWO_NODES=0
