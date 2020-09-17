@@ -125,3 +125,8 @@ ufw allow from $ALLOW_IP to any port 443
 
 sed "s#CURRENT_IP#$CURRENT_IP#" default_nginx.conf > $NGINX_CONFIG_FILE
 perl -i -p0e "s/ALLOW_HTTP_IPS/$ALLOW_NGINX_IPS/s" $NGINX_CONFIG_FILE
+
+nginx -t
+service nginx restart
+
+install_once haproxy
