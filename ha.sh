@@ -13,6 +13,7 @@ function join() {
 }
 
 CONFIG_FILE=${CONFIG_FILE:-/etc/corosync/corosync.conf}
+HAPROXY_CONFIG_FILE=${HAPROXY_CONFIG_FILE:-/etc/haproxy/haproxy.cfg}
 NGINX_CONFIG_FILE=${NGINX_CONFIG_FILE:-/etc/nginx/sites-available/default}
 ALLOW_IP=${ALLOW_IP:-10.108.0.0/20}
 TIMEZONE=${TIMEZONE:-"America/New_York"}
@@ -130,3 +131,7 @@ nginx -t
 service nginx restart
 
 install_once haproxy
+if ! grep -q forwardfor "$HAPROXY_CONFIG_FILE"; then
+  perl -i -p0e "s/defaults/defaults\n  option forwardfor/s" $HAPROXY_CONFIG_FILE
+  Some Actions # SomeString was not found
+fi
