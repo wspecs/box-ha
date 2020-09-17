@@ -13,7 +13,7 @@ function join() {
 }
 
 CONFIG_FILE=${CONFIG_FILE:-/etc/corosync/corosync.conf}
-NGINX_CONFIG_FILE=${NGINX_CONFIG_FILE:-/etc/nginx/sites-available/defaul}
+NGINX_CONFIG_FILE=${NGINX_CONFIG_FILE:-/etc/nginx/sites-available/default}
 ALLOW_IP=${ALLOW_IP:-10.108.0.0/20}
 TIMEZONE=${TIMEZONE:-"America/New_York"}
 CURRENT_IP=$(curl 169.254.169.254/metadata/v1/interfaces/private/0/ipv4/address && echo)
