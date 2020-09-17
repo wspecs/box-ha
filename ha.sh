@@ -116,7 +116,7 @@ fi
 
 crm configure primitive FloatIP ocf:digitalocean:floatip \
   params do_token=$DO_TOKEN \
-  floating_ip=$FLOATING_IP
+  floating_ip=$FLOATING_IP || true;
 
 install_once nginx
 echo Droplet: $HOSTNAME, IP Address: $PUBLIC_IPV4 > /var/www/html/index.nginx-debian.html
