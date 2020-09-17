@@ -128,7 +128,7 @@ ufw allow from $ALLOW_IP to any port 443
 
 if ! grep -q haproxy_log /etc/nginx/nginx.conf; then		 
   perl -i -p0e "s/http {/http {\n  HAPROXY_LOG/s" /etc/nginx/nginx.conf
-  sed -i's#HAPROXY_LOG#log_format haproxy_log \'ProxyIP: $remote_addr - ClientIP: $http_x_forwarded_for - $remote_user [$time_local] \' \'"$request" $status $body_bytes_sent "$http_referer" \' \'"$http_user_agent"\';#' /etc/nginx/nginx.conf
+  sed -i "s#HAPROXY_LOG#log_format haproxy_log 'ProxyIP: \$remote_addr - ClientIP: \$http_x_forwarded_for - \$remote_user [\$time_local] ' '\"\$request\" \$status \$body_bytes_sent \"\$http_referer\" ' '\"\$http_user_agent\"';#" /etc/nginx/nginx.conf
 fi
 
 sed "s#CURRENT_IP#$CURRENT_IP#" default_nginx.conf > $NGINX_CONFIG_FILE
