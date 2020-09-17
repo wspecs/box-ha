@@ -135,3 +135,5 @@ if ! grep -q forwardfor "$HAPROXY_CONFIG_FILE"; then
   perl -i -p0e "s/defaults/defaults\n  option forwardfor/s" $HAPROXY_CONFIG_FILE
   Some Actions # SomeString was not found
 fi
+
+haproxy -f /etc/haproxy/haproxy.cfg -c
