@@ -138,3 +138,10 @@ perl -i -p0e "s/BACKEND_POOL/$BACKEND_POOL/s" $HAPROXY_CONFIG_FILE
 
 haproxy -f /etc/haproxy/haproxy.cfg -c
 service haproxy restart
+cd /usr/lib/ocf/resource.d/heartbeat
+curl -O https://raw.githubusercontent.com/thisismitch/cluster-agents/master/haproxy
+chmod +x haproxy
+crm configure primitive haproxy ocf:heartbeat:haproxy op monitor interval=15s
+crm configure clone haproxy-clone haproxy
+crm configure colocation FloatIP-haproxy inf: FloatIP haproxy-clone
+crm configure show
