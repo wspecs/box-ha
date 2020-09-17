@@ -136,4 +136,9 @@ if ! grep -q forwardfor "$HAPROXY_CONFIG_FILE"; then
   Some Actions # SomeString was not found
 fi
 
+if ! grep -q app_pool "$HAPROXY_CONFIG_FILE"; then
+  perl -i -p0e "s/defaults/defaults\n  default_backend app_pool/s" $HAPROXY_CONFIG_FILE
+  Some Actions # SomeString was not found
+fi
+
 haproxy -f /etc/haproxy/haproxy.cfg -c
