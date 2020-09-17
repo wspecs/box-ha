@@ -123,8 +123,8 @@ crm configure primitive FloatIP ocf:digitalocean:floatip \
 
 install_once nginx
 echo Droplet: $HOSTNAME, IP Address: $PUBLIC_IPV4 > /var/www/html/index.nginx-debian.html
-ufw allow from $ALLOW_IP to any port 80
-ufw allow from $ALLOW_IP to any port 443
+ufw allow 80
+ufw allow 443
 
 if ! grep -q haproxy_log /etc/nginx/nginx.conf; then		 
   perl -i -p0e "s/http {/http {\n  HAPROXY_LOG/s" /etc/nginx/nginx.conf
