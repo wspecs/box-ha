@@ -142,6 +142,6 @@ cd /usr/lib/ocf/resource.d/heartbeat
 curl -O https://raw.githubusercontent.com/thisismitch/cluster-agents/master/haproxy
 chmod +x haproxy
 crm configure primitive haproxy ocf:heartbeat:haproxy op monitor interval=15s || true
-crm configure clone haproxy-clone haproxy
+crm configure clone haproxy-clone haproxy || true
 crm configure colocation FloatIP-haproxy inf: FloatIP haproxy-clone || true
 crm configure show
