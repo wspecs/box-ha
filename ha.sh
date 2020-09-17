@@ -136,8 +136,8 @@ if ! grep -q forwardfor "$HAPROXY_CONFIG_FILE"; then
   Some Actions # SomeString was not found
 fi
 
-if ! grep -q app_pool "$HAPROXY_CONFIG_FILE"; then
-  perl -i -p0e "s/defaults/defaults\n  default_backend app_pool/s" $HAPROXY_CONFIG_FILE
+if ! grep -q http-server-close "$HAPROXY_CONFIG_FILE"; then
+  perl -i -p0e "s/defaults/defaults\n  option http-server-close/s" $HAPROXY_CONFIG_FILE
   Some Actions # SomeString was not found
 fi
 
