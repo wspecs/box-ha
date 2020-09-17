@@ -66,7 +66,7 @@ for i in "${!SERVERS[@]}"; do
     name: ${NODE_NAMES[$i]}
     nodeid: $(echo ${i} + 1 | bc)\n  }\n"
   ALLOW_NGINX_IPS+="  allow ${SERVERS[$i]};\n"
-  BACKEND_POOL+="server app-$(echo ${i} + 1 | bc) ${SERVERS[$i]}:80 check"
+  BACKEND_POOL+="    server app-$(echo ${i} + 1 | bc) ${SERVERS[$i]}:80 check\n"
 done
 
 TWO_NODES=0
